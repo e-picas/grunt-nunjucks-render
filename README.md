@@ -74,39 +74,39 @@ files: [
 
 ### Options
 
-directory
-:   Type: `String`  
-:   Default value: `"."` (i.e. relative to your `Gruntfile.js`)
-:   Path to the directory in which partials can be found. Partials are looked up by name in this directory.
+-   **directory**
+    -   Type: `String`  
+    -   Default value: `"."` (i.e. relative to your `Gruntfile.js`)
+    -   Path to the directory in which partials can be found. Partials are looked up by name in this directory.
 
-extension
-:   Type: `String`  
-:   Default value: `".j2"` (for *jinja2*)
-:   *nunjucks* will use this extension when looking up partials (if none is specified).
+-   **extension**
+    -   Type: `String`  
+    -   Default value: `".j2"` (for *jinja2*)
+    -   *nunjucks* will use this extension when looking up partials (if none is specified).
 
-autoescape
-:   Type: `String`  
-:   Default value: `false`
-:   Force escaping of data while using it by *nunjucks*.
+-   **autoescape**
+    -   Type: `String`  
+    -   Default value: `false`
+    -   Force escaping of data while using it by *nunjucks*.
 
-watch
-:   Type: `String`  
-:   Default value: `true`
-:   Force *nunjucks* to watch template files updates.
+-   **watch**
+    -   Type: `String`  
+    -   Default value: `true`
+    -   Force *nunjucks* to watch template files updates.
 
-data
-:   Type: anything normally accepted as template's data
-:   Default value: `null`
-:   Can be used to fill in a default `data` value for any item in your `files` list. This will
-    be merged with "per-file" data (which have precedence).
+-   **data**
+    -   Type: anything normally accepted as template's data
+    -   Default value: `null`
+    -   Can be used to fill in a default `data` value for any item in your `files` list. This will
+        be merged with "per-file" data (which have precedence).
 
-processData
-:   Type: `function`
-:   Default: `null`
-:   Define a function to process data for pre-compiling work.
+-   **processData**
+    -   Type: `function`
+    -   Default: `null`
+    -   Define a function to process data for pre-compiling work.
 
-asFunction
-:   Type: `Boolean`
-:   Default value: `false`
-:   Use this to return the raw *precompiled* version of the *nunjucks* content instead of its
-    final rendering.
+-   **asFunction**
+    -   Type: `Boolean`
+    -   Default value: `false`
+    -   Use this to return the raw *precompiled* version of the *nunjucks* content instead of its
+        final rendering.
