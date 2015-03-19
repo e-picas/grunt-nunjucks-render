@@ -1,0 +1,46 @@
+{
+  "name": "grunt-nunjucks-render",
+  "version": "0.1.0",
+  "description": "Render nunjucks templates",
+  "main": "Gruntfile.js",
+  "dependencies": {
+    "nunjucks": "*"
+  },
+  "peerDependencies": {
+    "grunt": ">=0.4.1",
+    "nunjucks": "*"
+  },
+  "devDependencies": {
+    "grunt": "~0.4.1",
+    "grunt-contrib-watch": "~0.5.3"
+  },
+  "engines": {
+    "node": ">= 0.8.0"
+  },
+  "scripts": {
+    "test": "grunt test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "http://github.com/piwi/grunt-nunjucks-render"
+  },
+  "keywords": [
+    "gruntplugin",
+    "nunjucks"
+  ],
+  "author": {
+    "name": "piwi",
+    "email": "me@e-piwi.fr",
+    "url": "http://e-piwi.fr/"
+  },
+  "licenses": [
+    {
+      "type": "Apache-2.0",
+      "url": "https://github.com/piwi/grunt-nunjucks-render/blob/master/LICENSE"
+    }
+  ],
+  "bugs": {
+    "url": "https://github.com/piwi/grunt-nunjucks-render/issues"
+  },
+  "homepage": "https://github.com/piwi/grunt-nunjucks-render"
+}
