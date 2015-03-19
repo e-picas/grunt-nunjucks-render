@@ -1,0 +1,4 @@
+yaml_item1: "my value"
+
+yaml_html: |
+    An <strong>HTML</strong> string to <em>test</em> <a href="#">escaping</a> ...

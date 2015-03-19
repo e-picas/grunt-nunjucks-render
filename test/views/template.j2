@@ -1,0 +1,30 @@
+
+<p>A simple variable `username`:</p>
+{{ username }}
+
+<p>A boolean test `boolval`:</p>
+{% if boolval %}
+  "boolval" is true
+{% else %}
+  "boolval" is false
+{% endif %}
+
+<p>A loop over a table `table`:</p>
+<ul>
+{% for item in table %}
+  <li>{{ item }}</li>
+{% endfor %}
+</ul>
+
+<p>An object item variable `object.index`:</p>
+{{ object.first_index }}
+
+<p>A loop over an object `object`:</p>
+<ul>
+{% for var, val in object %}
+  <li>{{ var }} value is: {{ val }}</li>
+{% endfor %}
+</ul>
+
+<p>Inclusion of a "partial" template `template-partial.j2`:</p>
+{% include "template-partial.j2" %}

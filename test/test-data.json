@@ -1,0 +1,11 @@
+{
+    "username": "my name",
+    "boolval":  true,
+    "table": [ "one", "two", 3, { "index": "four" } ],
+    "object": {
+        "first_index": "one", 
+        "second_index": "two", 
+        "third_index": 3, 
+        "fourth_index": "four" 
+    }
+}
