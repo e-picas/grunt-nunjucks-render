@@ -1,4 +1,3 @@
-node_modules/*
-test/output/*
-tmp/*
-*/tmp/*
+node_modules
+npm-debug.log
+tmp
