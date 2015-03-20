@@ -51,7 +51,7 @@ module.exports = function gruntTask(grunt) {
         // set up Nunjucks environment
         var searchPaths = [];
         if (!opts.searchPaths) {
-            grunt.log.debug(">> no 'searPaths' defined, using auto search paths (will take much longer!!!)");
+            grunt.log.debug(">> no 'searchPaths' defined, using auto search paths (will take much longer!!!)");
             searchPaths = grunt.file.expand({filter: 'isDirectory'}, ['**', '!node_modules/**']);
         } else {
             searchPaths = grunt.file.expand(opts.searchPaths);
