@@ -119,6 +119,11 @@ A "*template*" here is a raw template, defined as the `src` item of a target fil
     -   Use this to return the raw *precompiled* version of the *nunjucks* content instead of its
         final rendering.
 
+-   **env**
+    -   Type: `Environment` (see <http://mozilla.github.io/nunjucks/api.html#environment>)
+    -   Default value: `null`
+    -   A custom *nunjucks* environment to use for compilation.
+
 #### Examples
 
 Define a base path for all parsed files:
