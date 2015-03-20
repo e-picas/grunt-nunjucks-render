@@ -119,7 +119,7 @@ Define a global `data` table for all parsed files:
 options: {
     data: {
         name: "my name",
-        desc: "my description
+        desc: "my description"
     }
 },
 files: {
@@ -146,7 +146,7 @@ Define a global `data` table for all targets, over-written by a "per-target" dat
 options: {
     data: {
         name: "my name",
-        desc: "my description
+        desc: "my description"
     }
 },
 my_target: {
