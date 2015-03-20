@@ -1,0 +1,107 @@
+(function() {(window.nunjucksPrecompiled = window.nunjucksPrecompiled || {})["test/views/template.j2"] = (function() {function root(env, context, frame, runtime, cb) {
+var lineno = null;
+var colno = null;
+var output = "";
+try {
+output += "\n<p>A simple variable `username`:</p>\n";
+output += runtime.suppressValue(runtime.contextOrFrameLookup(context, frame, "username"), env.autoesc);
+output += "\n\n<p>A boolean test `boolval`:</p>\n";
+if(runtime.contextOrFrameLookup(context, frame, "boolval")) {
+output += "\n  \"boolval\" is true\n";
+;
+}
+else {
+output += "\n  \"boolval\" is false\n";
+;
+}
+output += "\n\n<p>A loop over a table `table`:</p>\n<ul>\n";
+frame = frame.push();
+var t_3 = runtime.contextOrFrameLookup(context, frame, "table");
+if(t_3) {var t_2 = t_3.length;
+for(var t_1=0; t_1 < t_3.length; t_1++) {
+var t_4 = t_3[t_1];
+frame.set("item", t_4);
+frame.set("loop.index", t_1 + 1);
+frame.set("loop.index0", t_1);
+frame.set("loop.revindex", t_2 - t_1);
+frame.set("loop.revindex0", t_2 - t_1 - 1);
+frame.set("loop.first", t_1 === 0);
+frame.set("loop.last", t_1 === t_2 - 1);
+frame.set("loop.length", t_2);
+output += "\n  <li>";
+output += runtime.suppressValue(t_4, env.autoesc);
+output += "</li>\n";
+;
+}
+}
+frame = frame.pop();
+output += "\n</ul>\n\n<p>An object item variable `object.index`:</p>\n";
+output += runtime.suppressValue(runtime.memberLookup((runtime.contextOrFrameLookup(context, frame, "object")),"first_index", env.autoesc), env.autoesc);
+output += "\n\n<p>A loop over an object `object`:</p>\n<ul>\n";
+frame = frame.push();
+var t_7 = runtime.contextOrFrameLookup(context, frame, "object");
+if(t_7) {var t_5;
+if(runtime.isArray(t_7)) {
+var t_6 = t_7.length;
+for(t_5=0; t_5 < t_7.length; t_5++) {
+var t_8 = t_7[t_5][0]
+frame.set("var", t_7[t_5][0]);
+var t_9 = t_7[t_5][1]
+frame.set("val", t_7[t_5][1]);
+frame.set("loop.index", t_5 + 1);
+frame.set("loop.index0", t_5);
+frame.set("loop.revindex", t_6 - t_5);
+frame.set("loop.revindex0", t_6 - t_5 - 1);
+frame.set("loop.first", t_5 === 0);
+frame.set("loop.last", t_5 === t_6 - 1);
+frame.set("loop.length", t_6);
+output += "\n  <li>";
+output += runtime.suppressValue(t_8, env.autoesc);
+output += " value is: ";
+output += runtime.suppressValue(t_9, env.autoesc);
+output += "</li>\n";
+;
+}
+} else {
+t_5 = -1;
+var t_6 = runtime.keys(t_7).length;
+for(var t_10 in t_7) {
+t_5++;
+var t_11 = t_7[t_10];
+frame.set("var", t_10);
+frame.set("val", t_11);
+frame.set("loop.index", t_5 + 1);
+frame.set("loop.index0", t_5);
+frame.set("loop.revindex", t_6 - t_5);
+frame.set("loop.revindex0", t_6 - t_5 - 1);
+frame.set("loop.first", t_5 === 0);
+frame.set("loop.last", t_5 === t_6 - 1);
+frame.set("loop.length", t_6);
+output += "\n  <li>";
+output += runtime.suppressValue(t_10, env.autoesc);
+output += " value is: ";
+output += runtime.suppressValue(t_11, env.autoesc);
+output += "</li>\n";
+;
+}
+}
+}
+frame = frame.pop();
+output += "\n</ul>\n\n<p>Inclusion of a \"partial\" template `template-partial.j2`:</p>\n";
+env.getTemplate("template-partial.j2", function(t_14,t_12) {
+if(t_14) { cb(t_14); return; }
+t_12.render(context.getVariables(), frame.push(), function(t_15,t_13) {
+if(t_15) { cb(t_15); return; }
+output += t_13
+output += "\n";
+cb(null, output);
+})});
+} catch (e) {
+  cb(runtime.handleError(e, lineno, colno));
+}
+}
+return {
+root: root
+};
+})();
+})();
