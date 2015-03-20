@@ -19,7 +19,7 @@ module.exports = function gruntTask(grunt) {
     // GRUNT task "nunjucks_render"
     grunt.registerMultiTask('nunjucks_render', 'Render nunjucks templates', function () {
         // prepare task timing
-        var start,
+        var start, src_counter,
             time = function(){ return ((new Date()).getTime() - start) + "ms"; };
 
         // merge task-specific and/or target-specific options with these defaults
@@ -69,6 +69,7 @@ module.exports = function gruntTask(grunt) {
         // iterate over all specified file groups
         this.files.forEach(function (f) {
             start = (new Date()).getTime();
+            src_counter = 0;
 
             var fopts = lib.getData((f.options !== undefined) ? f.options : undefined);
             fopts = lib.merge(opts, fopts);
@@ -89,6 +90,7 @@ module.exports = function gruntTask(grunt) {
                 }
                 return true;
             }).map(function(filepath) {
+                src_counter++;
                 var filename = filepath;
                 if (filepath.substr(0, opts.baseDir.length) === opts.baseDir) {
                     filename = filepath.substr(opts.baseDir.length);
@@ -118,7 +120,7 @@ module.exports = function gruntTask(grunt) {
 
             // print a success message
             grunt.log.debug('file "' + f.dest + '" created');
-            grunt.log.ok('1 file created (' + time() + ')');
+            grunt.log.ok(src_counter + ' file(s) parsed / 1 file created (' + time() + ')');
         });
     });
 

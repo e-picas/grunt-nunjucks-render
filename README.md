@@ -11,7 +11,7 @@ templates. It takes data in `JSON` or `YAML` format and allows to configure *nun
 Getting Started
 ---------------
 
-This plugin requires Grunt `~0.4.1`.
+This plugin requires Grunt `~0.4.1` and Node `~0.10.0`.
 
 Please first have a look at the [Getting Started](http://gruntjs.com/getting-started) guide of Grunt. 
 
@@ -92,12 +92,12 @@ A "*template*" here is a raw template, defined as the `src` item of a target fil
     -   One or more file extensions to use by the template loader while searching *nunjucks* templates.
 
 -   **autoescape**
-    -   Type: `String`  
+    -   Type: `Boolean`  
     -   Default value: `false`
     -   Force data escaping by *nunjucks*.
 
 -   **watch**
-    -   Type: `String`  
+    -   Type: `Boolean`  
     -   Default value: `true`
     -   Force *nunjucks* to watch template files updates.
 
@@ -116,7 +116,7 @@ A "*template*" here is a raw template, defined as the `src` item of a target fil
 -   **name**
     -   Type: `RegExp`,`Function`
     -   Default value: `/.*/`
-    -   A reglar expression or function to build final template name. Default is the filename.
+    -   A regular expression or function to build final template name. Default is the filename.
 
 -   **asFunction**
     -   Type: `Boolean`
@@ -182,8 +182,8 @@ options: {
 },
 my_target: {
     files: {
-        data:   { desc: "my desc which will over-write global one" }
-        src:    'template/to/read.j2'
+        data:   { desc: "my desc which will over-write global one" },
+        src:    'template/to/read.j2',
         dest:   'file/to/output.html'
     }
 }

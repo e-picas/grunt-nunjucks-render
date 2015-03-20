@@ -73,6 +73,14 @@ module.exports = function(grunt) {
                     data:       [ 'test/fixtures/test-data.json', 'test/fixtures/test-data.yml' ],
                     dest:       'tmp/template-extension.html'
                 }]
+            },
+            multi_files: {
+                options: { extensions: 'txt' },
+                files : [{
+                    src:        [ 'test/views/template.j2', 'test/views/template-partial.j2'],
+                    data:       [ 'test/fixtures/test-data.json', 'test/fixtures/test-data.yml' ],
+                    dest:       'tmp/template-multi_files.html'
+                }]
             }
         },
 
