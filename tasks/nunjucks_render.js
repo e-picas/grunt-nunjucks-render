@@ -8,13 +8,14 @@
 
 'use strict';
 
-module.exports = function gruntTask(grunt) {
+// node/external libs
+var path        = require('path');
+var nunjucks    = require('nunjucks');
+var loader      = require('../lib/loader');
+var lib         = require('../lib/lib');
+var nlib        = require('nunjucks/src/lib');
 
-    // node/external libs
-    var path        = require('path'),
-        nunjucks    = require('nunjucks'),
-        loader      = require('../lib/loader'),
-        lib         = require('../lib/lib');
+module.exports = function gruntTask(grunt) {
 
     // GRUNT task "nunjucks_render"
     grunt.registerMultiTask('nunjucks_render', 'Render nunjucks templates', function () {
@@ -35,7 +36,7 @@ module.exports = function gruntTask(grunt) {
             processData:    function(data){ return data; },
             env:            null
         });
-        opts.extensions = lib.isArray(opts.extensions) ? opts.extensions : [opts.extensions];
+        opts.extensions = nlib.isArray(opts.extensions) ? opts.extensions : [opts.extensions];
         for (var i in opts.extensions) {
             opts.extensions[i] = lib.dotExtension(opts.extensions[i]);
         }
@@ -43,7 +44,7 @@ module.exports = function gruntTask(grunt) {
             opts.baseDir = lib.slashPath(opts.baseDir);
         }
 
-        var nameFunc = lib.isFunction(opts.name) ? opts.name : function(filepath) {
+        var nameFunc = nlib.isFunction(opts.name) ? opts.name : function(filepath) {
             return filepath;
         };
 
