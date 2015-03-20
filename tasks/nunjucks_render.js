@@ -18,6 +18,9 @@ module.exports = function gruntTask(grunt) {
 
     // GRUNT task "nunjucks_render"
     grunt.registerMultiTask('nunjucks_render', 'Render nunjucks templates', function () {
+        // prepare task timing
+        var start,
+            time = function(){ return ((new Date()).getTime() - start) + "ms"; };
 
         // merge task-specific and/or target-specific options with these defaults
         var opts = this.options({
@@ -29,7 +32,8 @@ module.exports = function gruntTask(grunt) {
             watch:          true,
             asFunction:     false,
             data:           null,
-            processData:    function(data){ return data; }
+            processData:    function(data){ return data; },
+            env:            null
         });
         opts.extensions = lib.isArray(opts.extensions) ? opts.extensions : [opts.extensions];
         for (var i in opts.extensions) {
@@ -59,10 +63,12 @@ module.exports = function gruntTask(grunt) {
             autoescape:     opts.autoescape,
             watch:          opts.watch
     	});
-        opts.env = new nunjucks.Environment([fileLoader]);
+    	var env_opts = opts.env ? [opts_env, fileLoader] : [fileLoader];
+        opts.env = new nunjucks.Environment(env_opts);
 
         // iterate over all specified file groups
         this.files.forEach(function (f) {
+            start = (new Date()).getTime();
 
             var fopts = lib.getData((f.options !== undefined) ? f.options : undefined);
             fopts = lib.merge(opts, fopts);
@@ -108,7 +114,8 @@ module.exports = function gruntTask(grunt) {
             grunt.file.write(f.dest, src);
 
             // print a success message
-            grunt.log.writeln('File "' + f.dest + '" created.');
+            grunt.log.debug('file "' + f.dest + '" created');
+            grunt.log.ok('1 file created (' + time() + ')');
         });
     });
 
