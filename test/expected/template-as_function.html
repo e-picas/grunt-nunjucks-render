@@ -1,4 +1,4 @@
-(function() {(window.nunjucksPrecompiled = window.nunjucksPrecompiled || {})["test/views/template.j2"] = (function() {function root(env, context, frame, runtime, cb) {
+(function() {(window.nunjucksPrecompiled = window.nunjucksPrecompiled || {})["template.j2"] = (function() {function root(env, context, frame, runtime, cb) {
 var lineno = null;
 var colno = null;
 var output = "";
@@ -93,9 +93,15 @@ if(t_14) { cb(t_14); return; }
 t_12.render(context.getVariables(), frame.push(), function(t_15,t_13) {
 if(t_15) { cb(t_15); return; }
 output += t_13
+output += "\n\n<p>Inclusion of a \"partial\" template with no extension `template-partial-2`:</p>\n";
+env.getTemplate("template-partial-2", function(t_18,t_16) {
+if(t_18) { cb(t_18); return; }
+t_16.render(context.getVariables(), frame.push(), function(t_19,t_17) {
+if(t_19) { cb(t_19); return; }
+output += t_17
 output += "\n";
 cb(null, output);
-})});
+})})})});
 } catch (e) {
   cb(runtime.handleError(e, lineno, colno));
 }
@@ -104,4 +110,4 @@ return {
 root: root
 };
 })();
-})();
+return function(ctx, cb) { return nunjucks.render("template.j2", ctx, cb); }})();

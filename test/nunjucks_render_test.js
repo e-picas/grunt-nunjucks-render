@@ -29,10 +29,10 @@ exports.nunjucks_render = {
     done();
   },
 
-  default_options: function(test) {
+  defaults: function(test) {
     test.expect(1);
-    var actual      = grunt.file.read('tmp/template-default_options.html');
-    var expected    = grunt.file.read('test/expected/template-default_options.html');
+    var actual      = grunt.file.read('tmp/template-defaults.html');
+    var expected    = grunt.file.read('test/expected/template-defaults.html');
     test.equal(actual, expected, 'Parsing with default options.');
     test.done();
   },
@@ -45,14 +45,22 @@ exports.nunjucks_render = {
     test.done();
   },
 
-  opt_escape: function(test) {
+  autoescape: function(test) {
     test.expect(1);
-    var actual      = grunt.file.read('tmp/template-opt_escape.html');
-    var expected    = grunt.file.read('test/expected/template-opt_escape.html');
-    test.equal(actual, expected, 'Test of auto-escape.');
+    var actual      = grunt.file.read('tmp/template-autoescape.html');
+    var expected    = grunt.file.read('test/expected/template-autoescape.html');
+    test.equal(actual, expected, 'Test of auto-escape=true.');
     test.done();
   },
 
+  extension: function(test) {
+    test.expect(1);
+    var actual      = grunt.file.read('tmp/template-extension.html');
+    var expected    = grunt.file.read('test/expected/template-extension.html');
+    test.equal(actual, expected, 'Test of extension=txt.');
+    test.done();
+  },
+  
   process_data: function(test) {
     test.expect(1);
     var actual      = grunt.file.read('tmp/template-process_data.html');

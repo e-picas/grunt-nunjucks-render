@@ -12,89 +12,70 @@ module.exports = function gruntTask(grunt) {
 
     // node/external libs
     var path        = require('path'),
-        nunjucks    = require('nunjucks');
-
-    // test if obj is callable
-    function isFunction(obj)
-    {
-        return Object.prototype.toString.call(obj) == '[object Function]';
-    }
-
-    // merge two objects with priority on second
-    function merge(obj1, obj2)
-    {
-        var obj3 = {}, index;
-        for (index in obj1) {
-            obj3[index] = obj1[index];
-        }
-        for (index in obj2) {
-            obj3[index] = obj2[index];
-        }
-        return obj3;
-    }
-
-    // prepare data parsing JSON or YAML file if so
-    function getData(data)
-    {
-        var tmp_data = {};
-        if (typeof(data)=='object') {
-            for (var i in data) {
-                if (typeof(data[i])=='string') {
-                    tmp_data = merge(tmp_data, getData(data[i]));
-                } else {
-                    tmp_data = merge(tmp_data, data[i]);
-                }
-            }
-        } else if (typeof(data)=='string') {
-            if (/\.json/i.test(data)) {
-              tmp_data = grunt.file.readJSON(data);
-            } else if (/\.ya?ml/i.test(data)) {
-              tmp_data = grunt.file.readYAML(data);
-            }
-        }
-        return tmp_data;
-    }
+        nunjucks    = require('nunjucks'),
+        loader      = require('../lib/loader'),
+        lib         = require('../lib/lib');
 
     // GRUNT task "nunjucks_render"
     grunt.registerMultiTask('nunjucks_render', 'Render nunjucks templates', function () {
+        // prepare task timing
+        var start,
+            time = function(){ return ((new Date()).getTime() - start) + "ms"; };
 
         // merge task-specific and/or target-specific options with these defaults
         var opts = this.options({
-                basedir :       '.',
-//                extension :    '.j2',
-                autoescape:     false,
-                watch:          true,
-                asFunction:     false,
-                data:           null,
-                processData:    function(data){ return data; }
-            });
+            name:           /(.*)/,
+            searchPaths:    false,
+            baseDir :       '.',
+            extensions :    [ '.j2' ],
+            autoescape:     false,
+            watch:          true,
+            asFunction:     false,
+            data:           null,
+            processData:    function(data){ return data; },
+            env:            null
+        });
+        opts.extensions = lib.isArray(opts.extensions) ? opts.extensions : [opts.extensions];
+        for (var i in opts.extensions) {
+            if (opts.extensions[i].slice(0,1)!='.') {
+                opts.extensions[i] = '.' + opts.extensions[i];
+            }
+        }
+        if (opts.baseDir && !opts.baseDir.match(/\/$/)) {
+            opts.baseDir += '/';
+        }
 
-        var nameFunc = isFunction(opts.name) ? opts.name : function(filepath) {
+        var nameFunc = lib.isFunction(opts.name) ? opts.name : function(filepath) {
             return filepath;
         };
 
-        // setup Nunjucks views
-        if (!grunt.file.exists(opts.basedir)) {
-            grunt.log.warn('Views directory "' + opts.basedir + '" not found!');
-            return false;
+        // set up Nunjucks environment
+        var searchPaths = [];
+        if (!opts.searchPaths) {
+            grunt.log.debug(">> no 'searPaths' defined, using auto search paths (will take much longer!!!)");
+            searchPaths = grunt.file.expand({filter: 'isDirectory'}, ['**', '!node_modules/**']);
+        } else {
+            searchPaths = grunt.file.expand(opts.searchPaths);
         }
-        opts.abs_basedir = path.resolve(opts.basedir) + '/';
-        if (grunt.option('debug')) {
-            grunt.log.writeln('Setting up Nunjucks view paths to: ' + opts.abs_basedir);
-        }
-        nunjucks.configure(opts.abs_basedir, {
+    	var fileLoader = new loader.FileSystemLoader( searchPaths, opts.name, {
+    	    baseDir:        opts.baseDir,
+    	    extensions:     opts.extensions,
             autoescape:     opts.autoescape,
             watch:          opts.watch
-        });
+    	});
+    	var env_opts = opts.env ? [opts_env, fileLoader] : [fileLoader];
+        opts.env = new nunjucks.Environment(env_opts);
 
         // iterate over all specified file groups
         this.files.forEach(function (f) {
+            start = (new Date()).getTime();
 
-            var fopts = getData((f.options !== undefined) ? f.options : undefined);
-            fopts = merge(opts, fopts);
+            var fopts = lib.getData((f.options !== undefined) ? f.options : undefined);
+            fopts = lib.merge(opts, fopts);
 
-            var data = getData((f.data !== undefined) ? f.data : undefined);
-            data = merge(opts.data, data);
+            // prepare data
+            var data = lib.getData((f.data !== undefined) ? f.data : undefined);
+            data = lib.merge(opts.data, data);
             if (opts.processData) {
                 data = opts.processData(data);
             }
@@ -109,16 +90,22 @@ module.exports = function gruntTask(grunt) {
                 return true;
             }).map(function(filepath) {
                 var filename = filepath;
-                if (filepath.substr(0, opts.basedir.length) === opts.basedir) {
-                    filename = filepath.substr(opts.basedir.length);
+                if (filepath.substr(0, opts.baseDir.length) === opts.baseDir) {
+                    filename = filepath.substr(opts.baseDir.length);
                 }
-                data.template_name      = nameFunc(filename);
-                data.template_path      = filepath;
-                data.template_realpath  = opts.abs_basedir + filename;
+                data.name = nameFunc(filename);
+
                 if (opts.asFunction) {
-                    return nunjucks.precompile(filepath, data);
+                    return nunjucks.precompile(filepath, {
+                        name:       nameFunc(filename),
+                        asFunction: true,
+                        env:        opts.env,
+                        data:       data
+                    });
                 }
-                return nunjucks.render(filename, data);
+
+                return opts.env.render(filename, data);
+
             }).join('');
 
             // show data on debug
@@ -130,7 +117,8 @@ module.exports = function gruntTask(grunt) {
             grunt.file.write(f.dest, src);
 
             // print a success message
-            grunt.log.writeln('File "' + f.dest + '" created.');
+            grunt.log.debug('file "' + f.dest + '" created');
+            grunt.log.ok('1 file created (' + time() + ')');
         });
     });
 
