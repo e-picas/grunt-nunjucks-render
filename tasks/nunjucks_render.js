@@ -37,12 +37,10 @@ module.exports = function gruntTask(grunt) {
         });
         opts.extensions = lib.isArray(opts.extensions) ? opts.extensions : [opts.extensions];
         for (var i in opts.extensions) {
-            if (opts.extensions[i].slice(0,1)!='.') {
-                opts.extensions[i] = '.' + opts.extensions[i];
-            }
+            opts.extensions[i] = lib.dotExtension(opts.extensions[i]);
         }
-        if (opts.baseDir && !opts.baseDir.match(/\/$/)) {
-            opts.baseDir += '/';
+        if (opts.baseDir) {
+            opts.baseDir = lib.slashPath(opts.baseDir);
         }
 
         var nameFunc = lib.isFunction(opts.name) ? opts.name : function(filepath) {
