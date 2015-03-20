@@ -120,7 +120,7 @@ A "*template*" here is a raw template, defined as the `src` item of a target fil
         final rendering.
 
 -   **env**
-    -   Type: `Environment` (see <http://mozilla.github.io/nunjucks/api.html#environment>)
+    -   Type: `nunjucks.Environment` (see <http://mozilla.github.io/nunjucks/api.html#environment>)
     -   Default value: `null`
     -   A custom *nunjucks* environment to use for compilation.
 
