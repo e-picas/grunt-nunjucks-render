@@ -30,13 +30,13 @@ module.exports = function(grunt) {
     
         nunjucks_render: {
             options: {
-                basedir:    'test/views/',
+                baseDir:    'test/views/',
             },
-            default_options: {
+            defaults: {
                 files : [{
                     src:        'test/views/template.j2',
                     data:       [ 'test/fixtures/test-data.json', 'test/fixtures/test-data.yml' ],
-                    dest:       'tmp/template-default_options.html'
+                    dest:       'tmp/template-defaults.html'
                 }]
             },
             autoescape: {
@@ -44,7 +44,7 @@ module.exports = function(grunt) {
                 files : [{
                     src:        'test/views/template.j2',
                     data:       [ 'test/fixtures/test-data.json', 'test/fixtures/test-data.yml' ],
-                    dest:       'tmp/template-opt_escape.html'
+                    dest:       'tmp/template-autoescape.html'
                 }]
             },
             process_data: {
@@ -64,6 +64,14 @@ module.exports = function(grunt) {
                     src:        'test/views/template.j2',
                     data:       [ 'test/fixtures/test-data.json', 'test/fixtures/test-data.yml' ],
                     dest:       'tmp/template-as_function.html'
+                }]
+            },
+            extension: {
+                options: { extensions: 'txt' },
+                files : [{
+                    src:        'test/views/template.j2',
+                    data:       [ 'test/fixtures/test-data.json', 'test/fixtures/test-data.yml' ],
+                    dest:       'tmp/template-extension.html'
                 }]
             }
         },
