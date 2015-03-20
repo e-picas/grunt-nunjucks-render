@@ -38,17 +38,37 @@ one
 
 <p>Inclusion of a "partial" template `template-partial.j2`:</p>
 
-<!-- inclusion of file test/views/template.j2 -->
+<!-- inclusion of file test/views/template-partial.j2 -->
 
 <p>A simple variable from the YAML data `yaml_item1`:</p>
 my value
 
 <p>An HTML string `yaml_html`:</p>
-An &lt;strong&gt;HTML&lt;/strong&gt; string to &lt;em&gt;test&lt;/em&gt; &lt;a href=&quot;#&quot;&gt;escaping&lt;/a&gt; ...
+An <strong>HTML</strong> string to <em>test</em> <a href="#">escaping</a> ...
 
 
 <p>An HTML string escaped `yaml_html`:</p>
-An &amp;lt;strong&amp;gt;HTML&amp;lt;/strong&amp;gt; string to &amp;lt;em&amp;gt;test&amp;lt;/em&amp;gt; &amp;lt;a href=&amp;quot;#&amp;quot;&amp;gt;escaping&amp;lt;/a&amp;gt; ...
+An &lt;strong&gt;HTML&lt;/strong&gt; string to &lt;em&gt;test&lt;/em&gt; &lt;a href=&quot;#&quot;&gt;escaping&lt;/a&gt; ...
+
+
+<p>An HTML string safed `yaml_html`:</p>
+An <strong>HTML</strong> string to <em>test</em> <a href="#">escaping</a> ...
+
+
+
+<p>Inclusion of a "partial" template with no extension `template-partial-2`:</p>
+
+<!-- inclusion of file test/views/template-partial-2.j2 -->
+
+<p>A simple variable from the YAML data `yaml_item1`:</p>
+my value
+
+<p>An HTML string `yaml_html`:</p>
+An <strong>HTML</strong> string to <em>test</em> <a href="#">escaping</a> ...
+
+
+<p>An HTML string escaped `yaml_html`:</p>
+An &lt;strong&gt;HTML&lt;/strong&gt; string to &lt;em&gt;test&lt;/em&gt; &lt;a href=&quot;#&quot;&gt;escaping&lt;/a&gt; ...
 
 
 <p>An HTML string safed `yaml_html`:</p>

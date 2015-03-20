@@ -57,6 +57,15 @@ grunt.initConfig({
 See the [dedicated page](http://gruntjs.com/configuring-tasks#files-array-format) to learn
 how to build your `files` objects.
 
+### Environment
+
+A special [environment loader](http://mozilla.github.io/nunjucks/api.html#loader) is designed
+by the plugin to use the full set of options when searching templates (original parsed ones
+and included ones). The loader is defined in `lib/loader.js`.
+
+The `template_path` environment variable will always contain the path of the current parsed
+template (the current file), even for inclusions.
+
 ### Options
 
 Options can be define globally for the `nunjucks_render` task or for each target.
@@ -65,10 +74,22 @@ The target options will always overload global settings.
 A "*template*" here is a raw template, defined as the `src` item of a target files, or a
 *nunjucks* included template.
 
--   **basedir**
+-   **searchPaths**
+    -   Type: `String`,`Array`  
+    -   Default value: `"."` (i.e. relative to your `Gruntfile.js`)
+    -   One or more paths to be scanned by the template loader while searching *nunjucks* templates.
+        By default, the loader will search in **all** directories of the root directory. If `baseDir`
+        is defined and the template is found in it, this file will be used.
+
+-   **baseDir**
     -   Type: `String`  
     -   Default value: `"."` (i.e. relative to your `Gruntfile.js`)
     -   Path to the directory in which *nunjucks* will search templates.
+
+-   **extensions**
+    -   Type: `String`,`Array`  
+    -   Default value: `".j2"` (for *jinja2*)
+    -   One or more file extensions to use by the template loader while searching *nunjucks* templates.
 
 -   **autoescape**
     -   Type: `String`  
@@ -104,7 +125,7 @@ Define a base path for all parsed files:
 
 ```js
 options: {
-    basedir: 'templates/to/read/'
+    baseDir: 'templates/to/read/'
 },
 files: {
     'file/to/output-1.html': 'file-1.j2',
