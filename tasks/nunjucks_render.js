@@ -10,9 +10,15 @@
 
 module.exports = function gruntTask(grunt) {
 
+    // node/external libs
     var path        = require('path'),
-        nunjucks    = require('nunjucks'),
-        lib         = require('nunjucks/src/lib');
+        nunjucks    = require('nunjucks');
+
+    // test if obj is callable
+    function isFunction(obj)
+    {
+        return Object.prototype.toString.call(obj) == '[object Function]';
+    }
 
     // merge two objects with priority on second
     function merge(obj1, obj2)
@@ -54,8 +60,8 @@ module.exports = function gruntTask(grunt) {
 
         // merge task-specific and/or target-specific options with these defaults
         var opts = this.options({
-                directory :     '.',
-                extension :     '.j2',
+                basedir :       '.',
+//                extension :    '.j2',
                 autoescape:     false,
                 watch:          true,
                 asFunction:     false,
@@ -63,31 +69,25 @@ module.exports = function gruntTask(grunt) {
                 processData:    function(data){ return data; }
             });
 
-        var nameFunc = lib.isFunction(opts.name) ? opts.name : function(filepath) {
+        var nameFunc = isFunction(opts.name) ? opts.name : function(filepath) {
             return filepath;
         };
 
-        if (!grunt.file.exists(opts.directory)) {
-            grunt.log.warn('Views directory "' + opts.directory + '" not found!');
+        // setup Nunjucks views
+        if (!grunt.file.exists(opts.basedir)) {
+            grunt.log.warn('Views directory "' + opts.basedir + '" not found!');
             return false;
         }
-        opts.abs_directory = path.resolve(opts.directory) + '/';
+        opts.abs_basedir = path.resolve(opts.basedir) + '/';
         if (grunt.option('debug')) {
-            grunt.log.writeln('Setting up Nunjucks view paths to: ' + opts.abs_directory);
-        }            
-
-        nunjucks.configure(opts.abs_directory, {
+            grunt.log.writeln('Setting up Nunjucks view paths to: ' + opts.abs_basedir);
+        }
+        nunjucks.configure(opts.abs_basedir, {
             autoescape:     opts.autoescape,
             watch:          opts.watch
         });
 
-/*
-// http://gruntjs.com/configuring-tasks#files-array-format
-files: [
-    {src: ['src/bb.js', 'src/bbb.js'], dest: 'dest/b/', nonull: true},
-    {src: ['src/bb1.js', 'src/bbb1.js'], dest: 'dest/b1/', filter: 'isFile'},
-],
-*/
+        // iterate over all specified file groups
         this.files.forEach(function (f) {
 
             var fopts = getData((f.options !== undefined) ? f.options : undefined);
@@ -99,7 +99,9 @@ files: [
                 data = opts.processData(data);
             }
             
+            // concat specified files
             var src = f.src.filter(function (filepath) {
+                // Warn on and remove invalid source files (if nonull was set)
                 if (!grunt.file.exists(filepath)) {
                     grunt.log.warn('File "' + filepath + '" not found!');
                     return false;
@@ -107,22 +109,28 @@ files: [
                 return true;
             }).map(function(filepath) {
                 var filename = filepath;
-                if (filepath.substr(0, opts.directory.length) === opts.directory) {
-                    filename = filepath.substr(opts.directory.length);
+                if (filepath.substr(0, opts.basedir.length) === opts.basedir) {
+                    filename = filepath.substr(opts.basedir.length);
                 }
                 data.template_name      = nameFunc(filename);
                 data.template_path      = filepath;
-                data.template_realpath  = opts.abs_directory + filename;
+                data.template_realpath  = opts.abs_basedir + filename;
                 if (opts.asFunction) {
-                    return nunjucks.precompile(filename, data);
+                    return nunjucks.precompile(filepath, data);
                 }
                 return nunjucks.render(filename, data);
             }).join('');
 
+            // show data on debug
             if (grunt.option('debug')) {
                 grunt.log.writeflags(data);
-            }            
+            }
+
+            // write the destination file
             grunt.file.write(f.dest, src);
+
+            // print a success message
+            grunt.log.writeln('File "' + f.dest + '" created.');
         });
     });
 
