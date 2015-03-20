@@ -67,6 +67,14 @@ exports.nunjucks_render = {
     var expected    = grunt.file.read('test/expected/template-process_data.html');
     test.equal(actual, expected, 'Test of data pre-processing.');
     test.done();
+  },
+
+  multi_files: function(test) {
+    test.expect(1);
+    var actual      = grunt.file.read('tmp/template-multi_files.html');
+    var expected    = grunt.file.read('test/expected/template-multi_files.html');
+    test.equal(actual, expected, 'Test of multi sources parsing.');
+    test.done();
   }
 
 };
