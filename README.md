@@ -113,6 +113,11 @@ A "*template*" here is a raw template, defined as the `src` item of a target fil
     -   Define a function to transform data as a pre-compilation process (before to send them
         to *nunjucks*).
 
+-   **name**
+    -   Type: `RegExp`,`Function`
+    -   Default value: `/.*/`
+    -   A reglar expression or function to build final template name. Default is the filename.
+
 -   **asFunction**
     -   Type: `Boolean`
     -   Default value: `false`

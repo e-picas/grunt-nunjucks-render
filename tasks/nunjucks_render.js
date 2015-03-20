@@ -93,9 +93,11 @@ module.exports = function gruntTask(grunt) {
                 if (filepath.substr(0, opts.baseDir.length) === opts.baseDir) {
                     filename = filepath.substr(opts.baseDir.length);
                 }
+                data.name = nameFunc(filename);
 
                 if (opts.asFunction) {
                     return nunjucks.precompile(filepath, {
+                        name:       nameFunc(filename),
                         asFunction: true,
                         env:        opts.env,
                         data:       data
@@ -103,6 +105,7 @@ module.exports = function gruntTask(grunt) {
                 }
 
                 return opts.env.render(filename, data);
+
             }).join('');
 
             // show data on debug
