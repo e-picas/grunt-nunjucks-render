@@ -3,7 +3,11 @@ var lineno = null;
 var colno = null;
 var output = "";
 try {
-output += "\n<p>A simple variable `username`:</p>\n";
+output += "\n<!-- file ";
+output += runtime.suppressValue(runtime.contextOrFrameLookup(context, frame, "template_path"), env.autoesc);
+output += " parsed at ##";
+output += runtime.suppressValue(env.getFilter("date").call(context, runtime.contextOrFrameLookup(context, frame, "template_date")), env.autoesc);
+output += "## -->\n\n<p>A simple variable `username`:</p>\n";
 output += runtime.suppressValue(runtime.contextOrFrameLookup(context, frame, "username"), env.autoesc);
 output += "\n\n<p>A boolean test `boolval`:</p>\n";
 if(runtime.contextOrFrameLookup(context, frame, "boolval")) {
