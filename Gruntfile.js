@@ -96,6 +96,42 @@ module.exports = function(grunt) {
                     src:        'test/views/template.j2',
                     dest:       'tmp/template-files_data.html'
                 }]
+            },
+            string_content: {
+                files : [{
+                    str:        [ "My jinja2 content with var: {{ username }}" ],
+                    str_append: "My ENDING jinja2 content with var: {{ username }}",
+                    data:       [ 'test/fixtures/test-data.json', 'test/fixtures/test-data.yml' ],
+                    dest:       'tmp/template-string_content.html'
+                }]
+            },
+            string_file_content: {
+                files : [{
+                    src:        'test/views/template.j2',
+                    str:        [ "My jinja2 content with var: {{ username }}" ],
+                    str_append: "My ENDING jinja2 content with var: {{ username }}",
+                    data:       [ 'test/fixtures/test-data.json', 'test/fixtures/test-data.yml' ],
+                    dest:       'tmp/template-string_file_content.html'
+                }]
+            },
+            string_file_content_prepend: {
+                files : [{
+                    src:        'test/views/template.j2',
+                    str:        [ "My jinja2 content with var: {{ username }}" ],
+                    str_prepend: "My BEGINING jinja2 content with var: {{ username }}",
+                    data:       [ 'test/fixtures/test-data.json', 'test/fixtures/test-data.yml' ],
+                    dest:       'tmp/template-string_file_content_prepend.html'
+                }]
+            },
+            string_file_content_append: {
+                options: { strAdd: 'append' },
+                files : [{
+                    src:        'test/views/template.j2',
+                    str:        [ "My jinja2 content with var: {{ username }}" ],
+                    str_append: "My ENDING jinja2 content with var: {{ username }}",
+                    data:       [ 'test/fixtures/test-data.json', 'test/fixtures/test-data.yml' ],
+                    dest:       'tmp/template-string_file_content_append.html'
+                }]
             }
         },
 
@@ -123,7 +159,17 @@ module.exports = function(grunt) {
     grunt.loadNpmTasks('grunt-contrib-watch');
 
     // test a simple rendering
-    grunt.registerTask('render', ['nunjucks_render']);
+    grunt.registerTask('render', 'render one or more targets ("render[:target_name]")', function(){
+        var targets = (arguments.length>0 ? arguments[0] : 'all');
+        if (targets==='all') {
+            grunt.task.run('nunjucks_render');
+        } else {
+            targets = targets.split(/,/g);
+            for (var t in targets) {
+                grunt.task.run('nunjucks_render:' + targets[t]);
+            }
+        }
+    });
 
     // whenever the "test" task is run, first clean the "tmp" dir, then run this
     // plugin's task(s), then test the result
