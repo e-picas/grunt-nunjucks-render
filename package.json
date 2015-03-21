@@ -5,7 +5,8 @@
   "main": "tasks/nunjucks_render.js",
   "dependencies": {
     "moment": "^2.9.0",
-    "nunjucks": "*"
+    "nunjucks": "*",
+    "nunjucks-date-filter": "^0.1.0"
   },
   "peerDependencies": {
     "grunt": ">=0.4.1",
