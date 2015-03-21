@@ -2,7 +2,7 @@
   "name": "grunt-nunjucks-render",
   "version": "0.3.2",
   "description": "Render nunjucks templates",
-  "main": "Gruntfile.js",
+  "main": "tasks/nunjucks_render.js",
   "dependencies": {
     "moment": "^2.9.0",
     "nunjucks": "*"
