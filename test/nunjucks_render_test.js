@@ -83,6 +83,14 @@ exports.nunjucks_render = {
     var expected    = grunt.file.read('test/expected/template-opt_data.html');
     test.equal(actual, expected, 'Test of user data parsing.');
     test.done();
+  },
+
+  files_data: function(test) {
+    test.expect(1);
+    var actual      = grunt.file.read('tmp/template-files_data.html');
+    var expected    = grunt.file.read('test/expected/template-files_data.html');
+    test.equal(actual, expected, 'Test of user data defined as files parsing.');
+    test.done();
   }
 
 };
