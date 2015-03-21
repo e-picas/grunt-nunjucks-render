@@ -2,7 +2,17 @@
 
 * (upcoming release)
 
-
+    * 9d9b685 - usage of the 'nunjucks-date-filter' package (piwi)
+    * b588773 - Merge branch 'feature-strings' into dev (piwi)
+    * e63b46e - update of the 'main' file of the plugin (piwi)
+    * f75bfca - new 'render-file' and 'render-string' modules (piwi)
+    * aac7cc1 - Merge branch 'feature-date-filter' into dev (piwi)
+    * aaf0e4a - info about the 'date' filter in the README (piwi)
+    * 3f469da - update of the tests with new 'date' filter treatment (piwi)
+    * 4af8472 - usage of the 'date' filter in test templates (piwi)
+    * c7dfeae - new 'date' filter for nunjucks (piwi)
+    * d865c7a - introducing codeclimate.com badge (piwi)
+    
 * v0.3.2 (2015-03-21 - 9a602ed)
 
     * 7b4de15 - new data tests (piwi)

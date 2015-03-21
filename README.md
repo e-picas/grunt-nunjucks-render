@@ -78,8 +78,8 @@ The `template_path` environment variable will always contain the path of the cur
 template (the current file), even for inclusions. The `template_date` environment variable 
 will always contain the date of the current parsing, even for inclusions.
 
-A special `date()` filter is available in your *nunjucks* templates, based on [moment.js](http://momentjs.com/).
-To use it, write:
+The plugin embeds the [date-filter](https://www.npmjs.com/package/nunjucks-date-filter) natively
+to let you write formated dates:
 
     {{ my_date | date() }}          // with default format
     {{ my_date | date('YYY') }}     // with custom format
@@ -285,6 +285,8 @@ Related third-parties links
 -   [JSON](http://json.org/), the *JavaScript Object Notation*
 -   [YAML](http://yaml.org/), a human friendly data serialization
 -   [moment.js](http://momentjs.com/), a date/time manager
+-   [nunjucks-date-filter](https://www.npmjs.com/package/nunjucks-date-filter), an implementation
+    of [momentjs](http://momentjs.com/) for *nunjucks*
 
 
 Contributing
