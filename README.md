@@ -40,14 +40,21 @@ passed into `grunt.initConfig()`:
 ```js
 grunt.initConfig({
   nunjucks_render: {
-    options: {},    // task global options go here
+    options: {
+                    // task global options go here
+    },
     your_target: {
-      options: {},  // target specific options go here
-      files : [
+      options: {
+                    // target specific options go here
+      },
+      files: [
         {
-          data:     // path or URL to JSON or YAML file or {}
-          src:      // path or URL to template file
-          dest:     // path to output destination here
+          data:         // path or URL to JSON or YAML file
+          src:          // path or URL to template file
+          dest:         // path to output destination here
+          str:          // a set of direct strings to parse (before templates by default)
+          str_prepend:  // a set of direct strings to parse and concat before templates
+          str_append:   // a set of direct strings to parse and concat after templates
         }
       ]
     }
@@ -56,7 +63,11 @@ grunt.initConfig({
 ```
 
 See the [dedicated page](http://gruntjs.com/configuring-tasks#files-array-format) to learn
-how to build your `files` objects.
+how to build your `files` objects. Note that some properties are added here:
+
+-   `data` to define a list of files to get parsing data,
+-   `str`, `str_prepend` and `str_append` to define some raw strings to parse and concatenate
+    to final rendering.
 
 ### Environment
 
@@ -110,13 +121,13 @@ A "*template*" here is a raw template, defined as the `src` item of a target fil
     -   Force *nunjucks* to watch template files updates.
 
 -   **data**
-    -   Type: `object`, filename or array of filenames
+    -   Type: Oobject`, filename or array of filenames
     -   Default value: `null`
     -   Can be used to fill in a default `data` value for a whole task or a target. This will
         be merged with "per-file" data (which have precedence).
 
 -   **processData**
-    -   Type: `function`
+    -   Type: `Function`
     -   Default: `null`
     -   Define a function to transform data as a pre-compilation process (before to send them
         to *nunjucks*).
@@ -137,7 +148,23 @@ A "*template*" here is a raw template, defined as the `src` item of a target fil
     -   Default value: `null`
     -   A custom *nunjucks* environment to use for compilation.
 
+-   **strAdd**
+    -   Type: `String` in "*prepend*" or "*append*"
+    -   Default value: `"prepend"`
+    -   The default process to execute on the `str` files entry. By default, strings will be
+        parsed and *prepended* to final rendering (i.e. displayed before templates contents).
+        Note that when this argument is `prepend`, the `str` items will be added AFTER any
+        `str_prepend` other items while if it is `append`, the `str` items will be added
+        BEFORE any other `str_append` items.
+
+-   **strSeparator**
+    -   Type: `String`
+    -   Default value: `"\n"`
+    -   A string used to separate parsed strings between them and from templates contents.
+
 #### Examples
+
+You can have a look at the `Gruntfile.js` of the plugin for various usage examples.
 
 Define a base path for all parsed files:
 
@@ -209,6 +236,43 @@ files: [
   }
 ]
 ```
+
+Usage of the `str` argument:
+
+```js
+files: {
+    data:   { desc: "my desc which will over-write global one" },
+    src:    'template/to/read.j2',
+    dest:   'file/to/output.html',
+    str:    "My nunjucks string with var: {{ username }}"
+}
+```
+
+```js
+files: {
+    data:   { desc: "my desc which will over-write global one" },
+    src:    'template/to/read.j2',
+    dest:   'file/to/output.html',
+    str:    [ "My first nunjucks string with var: {{ username }}", "My second nunjucks string with var: {{ username }}" ]
+}
+```
+
+
+Use the module in your tasks
+----------------------------
+
+As this module defines "non-tasked" functions, you can use the followings in your own tasks
+or modules.
+
+### `NunjucksRenderFile`
+
+    var NunjucksRenderFile = require('grunt-nunjucks-render/lib/render-file');
+    var content = NunjucksRenderFile(filepath, data[ , options ][ , nunjucks.Environment]);
+
+### `NunjucksRenderString`
+
+    var NunjucksRenderString = require('grunt-nunjucks-render/lib/render-string');
+    var content = NunjucksRenderString(str, data[ , options ][ , nunjucks.Environment]);
 
 
 Related third-parties links
