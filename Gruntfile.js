@@ -81,6 +81,21 @@ module.exports = function(grunt) {
                     data:       [ 'test/fixtures/test-data.json', 'test/fixtures/test-data.yml' ],
                     dest:       'tmp/template-multi_files.html'
                 }]
+            },
+            opt_data: {
+                options: { data: { "username_user": "my username" } },
+                files : [{
+                    src:        'test/views/template.j2',
+                    data:       [ 'test/fixtures/test-data.json', 'test/fixtures/test-data.yml' ],
+                    dest:       'tmp/template-opt_data.html'
+                }]
+            },
+            files_data: {
+                options: { data: [ 'test/fixtures/test-data.json', 'test/fixtures/test-data.yml' ] },
+                files : [{
+                    src:        'test/views/template.j2',
+                    dest:       'tmp/template-files_data.html'
+                }]
             }
         },
 

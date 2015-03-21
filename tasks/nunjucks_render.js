@@ -8,13 +8,14 @@
 
 'use strict';
 
-module.exports = function gruntTask(grunt) {
+// node/external libs
+var path        = require('path');
+var nunjucks    = require('nunjucks');
+var loader      = require('../lib/loader');
+var lib         = require('../lib/lib');
+var nlib        = require('nunjucks/src/lib');
 
-    // node/external libs
-    var path        = require('path'),
-        nunjucks    = require('nunjucks'),
-        loader      = require('../lib/loader'),
-        lib         = require('../lib/lib');
+module.exports = function gruntTask(grunt) {
 
     // GRUNT task "nunjucks_render"
     grunt.registerMultiTask('nunjucks_render', 'Render nunjucks templates', function () {
@@ -35,24 +36,22 @@ module.exports = function gruntTask(grunt) {
             processData:    function(data){ return data; },
             env:            null
         });
-        opts.extensions = lib.isArray(opts.extensions) ? opts.extensions : [opts.extensions];
+        opts.extensions = nlib.isArray(opts.extensions) ? opts.extensions : [opts.extensions];
         for (var i in opts.extensions) {
-            if (opts.extensions[i].slice(0,1)!='.') {
-                opts.extensions[i] = '.' + opts.extensions[i];
-            }
+            opts.extensions[i] = lib.dotExtension(opts.extensions[i]);
         }
-        if (opts.baseDir && !opts.baseDir.match(/\/$/)) {
-            opts.baseDir += '/';
+        if (opts.baseDir) {
+            opts.baseDir = lib.slashPath(opts.baseDir);
         }
 
-        var nameFunc = lib.isFunction(opts.name) ? opts.name : function(filepath) {
+        var nameFunc = nlib.isFunction(opts.name) ? opts.name : function(filepath) {
             return filepath;
         };
 
         // set up Nunjucks environment
         var searchPaths = [];
         if (!opts.searchPaths) {
-            grunt.log.debug(">> no 'searPaths' defined, using auto search paths (will take much longer!!!)");
+            grunt.log.debug(">> no 'searchPaths' defined, using auto search paths (will take much longer!!!)");
             searchPaths = grunt.file.expand({filter: 'isDirectory'}, ['**', '!node_modules/**']);
         } else {
             searchPaths = grunt.file.expand(opts.searchPaths);
@@ -71,12 +70,12 @@ module.exports = function gruntTask(grunt) {
             start = (new Date()).getTime();
             src_counter = 0;
 
-            var fopts = lib.getData((f.options !== undefined) ? f.options : undefined);
+            var fopts = lib.parseData((f.options !== undefined) ? f.options : undefined);
             fopts = lib.merge(opts, fopts);
 
             // prepare data
-            var data = lib.getData((f.data !== undefined) ? f.data : undefined);
-            data = lib.merge(opts.data, data);
+            var data = lib.parseData((f.data !== undefined) ? grunt.file.expand(f.data) : undefined);
+            data = lib.merge(lib.parseData(opts.data), data);
             if (opts.processData) {
                 data = opts.processData(data);
             }
