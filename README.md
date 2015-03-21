@@ -65,7 +65,14 @@ by the plugin to use the full set of options when searching templates (original 
 and included ones). The loader is defined in `lib/loader.js`.
 
 The `template_path` environment variable will always contain the path of the current parsed
-template (the current file), even for inclusions.
+template (the current file), even for inclusions. The `template_date` environment variable 
+will always contain the date of the parsing for the current file, even for inclusions.
+
+A special `date()` filter is available in your *nunjucks* templates, based on [moment.js](http://momentjs.com/).
+To use it, write:
+
+    {{ my_date | date() }}          // with default format
+    {{ my_date | date('YYY') }}     // with custom format
 
 ### Options
 
