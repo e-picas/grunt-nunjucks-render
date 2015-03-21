@@ -12,6 +12,7 @@
 var path        = require('path');
 var nunjucks    = require('nunjucks');
 var loader      = require('../lib/loader');
+var dateFilter  = require('../lib/date-filter');
 var lib         = require('../lib/lib');
 var nlib        = require('nunjucks/src/lib');
 
@@ -56,14 +57,15 @@ module.exports = function gruntTask(grunt) {
         } else {
             searchPaths = grunt.file.expand(opts.searchPaths);
         }
-    	var fileLoader = new loader.FileSystemLoader( searchPaths, opts.name, {
-    	    baseDir:        opts.baseDir,
-    	    extensions:     opts.extensions,
+        var fileLoader = new loader.FileSystemLoader( searchPaths, opts.name, {
+            baseDir:        opts.baseDir,
+            extensions:     opts.extensions,
             autoescape:     opts.autoescape,
             watch:          opts.watch
-    	});
-    	var env_opts = opts.env ? [opts_env, fileLoader] : [fileLoader];
+        });
+        var env_opts = opts.env ? [opts.env, fileLoader] : [fileLoader];
         opts.env = new nunjucks.Environment(env_opts);
+        opts.env.addFilter('date', dateFilter);
 
         // iterate over all specified file groups
         this.files.forEach(function (f) {
