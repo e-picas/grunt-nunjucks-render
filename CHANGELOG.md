@@ -2,6 +2,14 @@
 
 * (upcoming release)
 
+    * 7b4de15 - new data tests (piwi)
+    * ecf7b18 - rename 'getData' to 'parseData' + review of the method (piwi)
+    * a380015 - force 'file.data' entry expansion (piwi)
+    * f6a1d88 - usage of nunjucks/lib internal methods (piwi)
+    * 8c4cd0a - new library methods 'slashPath' and 'dotExtension' (piwi)
+
+* v0.3.1 (2015-03-20 - 23913ae)
+
     * f310509 - new multi-sources test (piwi)
 
 * v0.3.0 (2015-03-20 - 43c945d)
