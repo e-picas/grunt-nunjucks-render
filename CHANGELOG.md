@@ -2,6 +2,9 @@
 
 * (upcoming release)
 
+
+* v0.3.2 (2015-03-21 - 9a602ed)
+
     * 7b4de15 - new data tests (piwi)
     * ecf7b18 - rename 'getData' to 'parseData' + review of the method (piwi)
     * a380015 - force 'file.data' entry expansion (piwi)
