@@ -70,12 +70,12 @@ module.exports = function gruntTask(grunt) {
             start = (new Date()).getTime();
             src_counter = 0;
 
-            var fopts = lib.getData((f.options !== undefined) ? f.options : undefined);
+            var fopts = lib.parseData((f.options !== undefined) ? f.options : undefined);
             fopts = lib.merge(opts, fopts);
 
             // prepare data
-            var data = lib.getData((f.data !== undefined) ? grunt.file.expand(f.data) : undefined);
-            data = lib.merge(opts.data, data);
+            var data = lib.parseData((f.data !== undefined) ? grunt.file.expand(f.data) : undefined);
+            data = lib.merge(lib.parseData(opts.data), data);
             if (opts.processData) {
                 data = opts.processData(data);
             }
