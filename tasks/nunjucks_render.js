@@ -74,7 +74,7 @@ module.exports = function gruntTask(grunt) {
             fopts = lib.merge(opts, fopts);
 
             // prepare data
-            var data = lib.getData((f.data !== undefined) ? f.data : undefined);
+            var data = lib.getData((f.data !== undefined) ? grunt.file.expand(f.data) : undefined);
             data = lib.merge(opts.data, data);
             if (opts.processData) {
                 data = opts.processData(data);
