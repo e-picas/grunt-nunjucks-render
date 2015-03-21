@@ -1,6 +1,6 @@
 {
   "name": "grunt-nunjucks-render",
-  "version": "0.3.2",
+  "version": "0.4.0",
   "description": "Render nunjucks templates",
   "main": "tasks/nunjucks_render.js",
   "dependencies": {
