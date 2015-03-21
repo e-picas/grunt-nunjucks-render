@@ -99,7 +99,9 @@ if(t_18) { cb(t_18); return; }
 t_16.render(context.getVariables(), frame.push(), function(t_19,t_17) {
 if(t_19) { cb(t_19); return; }
 output += t_17
-output += "\n";
+output += "\n\n<p>A simple user variable `username_user`:</p>\n";
+output += runtime.suppressValue(runtime.contextOrFrameLookup(context, frame, "username_user"), env.autoesc);
+output += "\n\n";
 cb(null, output);
 })})})});
 } catch (e) {
