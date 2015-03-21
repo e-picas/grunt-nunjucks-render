@@ -4,6 +4,7 @@
   "description": "Render nunjucks templates",
   "main": "Gruntfile.js",
   "dependencies": {
+    "moment": "^2.9.0",
     "nunjucks": "*"
   },
   "peerDependencies": {
