@@ -95,6 +95,38 @@ exports.nunjucks_render = {
     var expected    = grunt.file.read('test/expected/template-files_data.html');
     test.equal(cleanUpDate(actual), cleanUpDate(expected), 'Test of user data defined as files parsing.');
     test.done();
+  },
+
+  string_content: function(test) {
+    test.expect(1);
+    var actual      = grunt.file.read('tmp/template-string_content.html');
+    var expected    = grunt.file.read('test/expected/template-string_content.html');
+    test.equal(cleanUpDate(actual), cleanUpDate(expected), 'Test of string content parsing.');
+    test.done();
+  },
+
+  string_file_content: function(test) {
+    test.expect(1);
+    var actual      = grunt.file.read('tmp/template-string_file_content.html');
+    var expected    = grunt.file.read('test/expected/template-string_file_content.html');
+    test.equal(cleanUpDate(actual), cleanUpDate(expected), 'Test of string content with file parsing.');
+    test.done();
+  },
+
+  string_file_content_prepend: function(test) {
+    test.expect(1);
+    var actual      = grunt.file.read('tmp/template-string_file_content_prepend.html');
+    var expected    = grunt.file.read('test/expected/template-string_file_content_prepend.html');
+    test.equal(cleanUpDate(actual), cleanUpDate(expected), 'Test of string content with file parsing, strings prepended.');
+    test.done();
+  },
+
+  string_file_content_append: function(test) {
+    test.expect(1);
+    var actual      = grunt.file.read('tmp/template-string_file_content_append.html');
+    var expected    = grunt.file.read('test/expected/template-string_file_content_append.html');
+    test.equal(cleanUpDate(actual), cleanUpDate(expected), 'Test of string content with file parsing, strings appended.');
+    test.done();
   }
 
 };
