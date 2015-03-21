@@ -286,7 +286,7 @@ Related third-parties links
 -   [YAML](http://yaml.org/), a human friendly data serialization
 -   [moment.js](http://momentjs.com/), a date/time manager
 -   [nunjucks-date-filter](https://www.npmjs.com/package/nunjucks-date-filter), an implementation
-    of [momentjs](http://momentjs.com/) for *nunjucks*
+    of *momentjs* for *nunjucks*
 
 
 Contributing

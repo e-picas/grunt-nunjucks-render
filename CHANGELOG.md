@@ -2,6 +2,9 @@
 
 * (upcoming release)
 
+
+* v0.4.0 (2015-03-21 - 64cc2f6)
+
     * 9d9b685 - usage of the 'nunjucks-date-filter' package (piwi)
     * b588773 - Merge branch 'feature-strings' into dev (piwi)
     * e63b46e - update of the 'main' file of the plugin (piwi)
