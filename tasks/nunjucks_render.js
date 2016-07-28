@@ -69,8 +69,9 @@ module.exports = function gruntTask(grunt) {
         var env_opts = opts.env ? [opts.env, fileLoader] : [fileLoader];
         opts.env = new nunjucks.Environment(env_opts);
         
-        // add the date fileter to nunjucks env
+        // Customise the Nunjucks Environment object
         opts.env.addFilter('date', dateFilter);
+        opts.env.addGlobal('template_date', new Date());
 
         // iterate over all specified file groups
         this.files.forEach(function(file)
