@@ -163,6 +163,11 @@ A "*template*" here is a raw template, defined as the `src` item of a target fil
     -   Default value: `"\n"`
     -   A string used to separate parsed strings between them and from templates contents.
 
+-   **modifyEnv**
+    -   Type: `Function`
+    -   Default value: `null`
+    -   A function that takes a Nunjucks Environment as the first argument and returns it with modifications, such as the addition of custom filters.
+
 #### Examples
 
 You can have a look at the `Gruntfile.js` of the plugin for various usage examples.
@@ -219,6 +224,25 @@ options: {
 my_target: {
     files: {
         data:   { desc: "my desc which will over-write global one" },
+        src:    'template/to/read.j2',
+        dest:   'file/to/output.html'
+    }
+}
+```
+
+Add a custom filter to the Nunjucks Environment:
+
+```js
+options: {
+    modifyEnv: function (env) {
+        env.addFilter('uppercase', function (str) {
+            return str.toUpperCase();
+        });
+        return env;
+    }
+},
+my_target: {
+    files: {
         src:    'template/to/read.j2',
         dest:   'file/to/output.html'
     }
