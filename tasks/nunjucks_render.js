@@ -92,16 +92,17 @@ module.exports = function gruntTask(grunt) {
             }
             
             // re-organize strings following the strAdd option
+            var i;
             file.str            = nlib.isArray(file.str || []) ? (file.str || []) : [file.str];
             file.str_prepend    = nlib.isArray(file.str_prepend || []) ? (file.str_prepend || []) : [file.str_prepend];
             file.str_append     = nlib.isArray(file.str_append || []) ? (file.str_append || []) : [file.str_append];
             if (file.str!==[]) {
                 if (opts.strAdd==='prepend') {
-                    for (var i in file.str) {
+                    for (i in file.str) {
                         file.str_prepend.push(file.str[i]);
                     }
                 } else {
-                    for (var i in file.str) {
+                    for ( i in file.str) {
                         file.str_append.unshift(file.str[i]);
                     }
                 }
@@ -125,8 +126,8 @@ module.exports = function gruntTask(grunt) {
                         str_counter++;
                         return renderString(str, data, fopts, opts.env, grunt);
                     })
-                    .join(opts.strSeparator)
-                    + opts.strSeparator;
+                    .join(opts.strSeparator) +
+                    opts.strSeparator;
             }
             
             // concat specified files
@@ -148,8 +149,8 @@ module.exports = function gruntTask(grunt) {
 
             // concat specified append strings
             if (file.str_append.length>0) {
-                result += opts.strSeparator
-                    + file.str_append
+                result += opts.strSeparator +
+                    file.str_append
                     .map(function(str) {
                         str_counter++;
                         return renderString(str, data, fopts, opts.env, grunt);
@@ -163,9 +164,9 @@ module.exports = function gruntTask(grunt) {
             // print a success message
             grunt.log.debug('file "' + file.dest + '" created');
             grunt.log.ok(
-                  (src_counter>0 ? src_counter + ' file(s) parsed / ' : '')
-                + (str_counter>0 ? str_counter + ' string(s) parsed / ' : '')
-                + '1 file created (' + time() + ')'
+                (src_counter>0 ? src_counter + ' file(s) parsed / ' : '') +
+                (str_counter>0 ? str_counter + ' string(s) parsed / ' : '') +
+                '1 file created (' + time() + ')'
             );
         });
 
