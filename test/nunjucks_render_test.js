@@ -127,6 +127,14 @@ exports.nunjucks_render = {
     var expected    = grunt.file.read('test/expected/template-string_file_content_append.html');
     test.equal(cleanUpDate(actual), cleanUpDate(expected), 'Test of string content with file parsing, strings appended.');
     test.done();
+  },
+
+  modify_env: function(test) {
+    test.expect(1);
+    var actual      = grunt.file.read('tmp/template-modify_env.html');
+    var expected    = grunt.file.read('test/expected/template-modify_env.html');
+    test.equal(cleanUpDate(actual), cleanUpDate(expected), 'Test of environment modifications via the modify_env option.');
+    test.done();
   }
 
 };

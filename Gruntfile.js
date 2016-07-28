@@ -132,6 +132,21 @@ module.exports = function(grunt) {
                     data:       [ 'test/fixtures/test-data.json', 'test/fixtures/test-data.yml' ],
                     dest:       'tmp/template-string_file_content_append.html'
                 }]
+            },
+            modify_env: {
+                options: {
+                    modifyEnv: function (env) {
+                        env.addFilter('testModifyEnv', function (string) {
+                            // Whatever the string is we simply return sausages
+                            return "Sausages";
+                        });
+                        return env;
+                    }
+                },
+                files : [{
+                    str:        [ '{{ "Beans" | testModifyEnv }}' ],
+                    dest:       'tmp/template-modify_env.html'
+                }]
             }
         },
 
